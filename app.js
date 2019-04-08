@@ -5,6 +5,9 @@ const express = require('express'),
   port = 3000,
   path = require('path'),
   router = express.Router(),
+  models = require('./models'),
+  bcrypt = require('bcrypt'),
+  SALT_ROUNDS = 10,
   VIEWS_PATH = path.join(__dirname, '/views');
 
 
@@ -21,14 +24,46 @@ server.set('views','./views')
 server.set('view engine','mustache')
 
 let storedCoordinates = []
-server.get('/',(req,res)=>{
+server.get('/register',(req,res)=>{
   res.render('register')
 })
 
-// server.get('/register',(req,res)=> {
-//   res.render("register")
+server.post('/register',(req,res)=>{
+  console.log("Hello")
+  let username = req.body.username
+  let password = req.body.password
 
-// })
+  models.User.findOne({
+    where :{username : username,}
+  }).then((user)=>{
+    if (user){
+      console.log("failed")
+      res.render('register',{message: "User name already exists!"})
+    } else {
+      bcrypt.hash(password,SALT_ROUNDS, function(error, hash){
+        if(error == null) {
+          let user = models.User.build({
+            username : username,
+            password : hash
+        }) 
+        user.save().then((savedUser)=>{
+          console.log(savedUser)
+        }).then(() => {
+          res.redirect('/login')
+        })    
+    
+        }
+      })
+    
+  }
+  
+  })
+})
+
+server.get('/login',(req,res)=> {
+  res.render("login")
+
+})
 
 
 
