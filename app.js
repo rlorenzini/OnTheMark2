@@ -11,6 +11,14 @@ const express = require('express'),
   VIEWS_PATH = path.join(__dirname, '/views');
 
 
+app.get('/complaints', (req,res) => {
+  res.render('complaints')
+})
+
+
+let complaints= []
+
+res.render('complaint', {users: complaint  })
 
 console.log(VIEWS_PATH)
 var cors = require('cors')
@@ -32,6 +40,11 @@ server.post('/register', (req, res) => {
   console.log("Hello")
   let username = req.body.username
   let password = req.body.password
+
+
+  // server.get('/register',(req,res)=> {
+  //   res.render("register")
+  // commented out for some reason? 
 
   models.User.findOne({
     where: { username: username, }
@@ -79,7 +92,7 @@ server.post('/login', (req, res) => {
     if (user) { //check for user password
       bcrypt.compare(password, user.password, (error, result) => {
         if (result) {
-          // check for admin 
+          // check for admin
           // if (user.admin == true) // render admin page
           res.render('leaflet')
         } else {
