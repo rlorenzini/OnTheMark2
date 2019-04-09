@@ -120,7 +120,7 @@ server.post('/login', (req, res) => {
       })
     }
   }).catch(() => {
-    res.render('login', { message: "Invalid username or password." })
+    res.render('login', { message: "Invalid username or password. Please Register" })
   })
 
 })
