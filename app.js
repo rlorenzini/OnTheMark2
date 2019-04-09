@@ -51,7 +51,7 @@ server.post('/register', (req, res) => {
 
   // server.get('/register',(req,res)=> {
   //   res.render("register")
-  // commented out for some reason? 
+  // commented out for some reason?
 
   models.User.findOne({
     where: { username: username, }
@@ -109,11 +109,11 @@ server.post('/login', (req, res) => {
                    console.log(persistedUser.username)
                 }
             }
-      
-        
+
+
           // check for admin
           // if (user.admin == true) // render admin page
-          
+
         } else {
           res.render('login', { message: "Invalid username or password." })
         }
@@ -135,6 +135,9 @@ server.post('/logout', (req, res) => {
   res.destroy()
 })
 
+server.post('/complaints', (req, res) => {
+  console.log(req.body.complaints)
+})
 
 
 

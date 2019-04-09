@@ -1,26 +1,15 @@
-<html>
-<head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-  crossorigin="anonymous">
-</head>
+<div>
+<form action="/complaints" method="POST">
+  <h4>Complaints</h4>
+  <select name="complaint" onchange = "this.form.submit()">
+    <option value="signal problem">Signal Problem</option>
+    <option value="pothole">Pothole</option>
+    <option value="flooding">Flooding</option>
+    <option value="street light">Street light</option>
+    <option value="missing sign">Missing Sign</option>
+    <option value="faded markings">Faded Road Markings</options>
+    <option value="dead animal">Dead Animal</options>
 
-
-<title></title>
-<body>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2">
-      Type of Complaint</button>
-
-    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-<!-- <form action= '/add-complaint' method='POST'> -->
-      <button class="dropdown-item" type="button">Signal Problem</button>
-      <button class="dropdown-item" type="button">Pothole</button>
-      <button class="dropdown-item" type="button">Flooding</button>
-      <button class="dropdown-item" type="button">Street lights</button>
-
- </div>
-  </div>
-
-</body>
-</html>
+  </select>
+</form>
+</div>
