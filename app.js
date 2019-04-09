@@ -8,15 +8,22 @@ const express = require('express'),
   models = require('./models'),
   bcrypt = require('bcrypt'),
   SALT_ROUNDS = 10,
+  session = require('express-session')
   VIEWS_PATH = path.join(__dirname, '/views');
+
+server.use(session({
+  secret: "fmgffndmf",
+  resave : false,
+  saveUninitialized :true
+}))
 
 
 server.get('/complaints', (req,res) => {
   res.render('complaints')
 })
 
-
-let complaints= []
+let persistedUser = {}
+//let complaints= []
 
 //res.render('complaint', {users: complaint  })
 
@@ -83,6 +90,8 @@ server.post('/login', (req, res) => {
   let username = req.body.username
   let password = req.body.password
 
+
+
   models.User.findOne({
     where: {
       username: username
@@ -92,9 +101,19 @@ server.post('/login', (req, res) => {
     if (user) { //check for user password
       bcrypt.compare(password, user.password, (error, result) => {
         if (result) {
+          persistedUser = user
+            if (persistedUser){
+                if (req.session){
+                   req.session.username = persistedUser.username
+                   res.redirect('user-page')
+                   console.log(persistedUser.username)
+                }
+            }
+      
+        
           // check for admin
           // if (user.admin == true) // render admin page
-          res.redirect('user-page')
+          
         } else {
           res.render('login', { message: "Invalid username or password." })
         }
