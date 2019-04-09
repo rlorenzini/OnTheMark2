@@ -2,7 +2,7 @@
   "name": "project2-onthemark",
   "version": "1.0.0",
   "description": "empty readme",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,6 +21,8 @@
     "path": "^0.12.7",
     "pg": "^7.9.0",
     "sequelize": "^5.2.12"
+  },"devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.8.1"
   },
   "repository": {
     "type": "git",

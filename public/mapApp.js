@@ -13,13 +13,35 @@ mymap.setMaxBounds([
 ]);
 //end of max
 
+// only one marker at a time; doesn't remove GPS marker
+var theMarker = {};
+
+mymap.on('click',function(e){
+    lat = e.latlng.lat;
+    lng = e.latlng.lng;
+    // console.log("You clicked the map at LAT: "+ lat+" and LONG: "+lng );
+        //Clear existing marker,
+        if (theMarker != undefined) {
+              mymap.removeLayer(theMarker);
+        };
+    //Add a marker to show where you clicked.
+     theMarker = L.marker([lat,lng]).addTo(mymap);
+});
+//end of marker removal
+
 //GPS
 L.control.locate().addTo(mymap);
 function onLocationFound(e) {
-    var radius = e.accuracy / 2;
-    L.marker(e.latlng).addTo(mymap)
-        .bindPopup("You are here").openPopup();
-    L.circle(e.latlng, radius).addTo(mymap);
+  lat = e.latlng.lat;
+  lng = e.latlng.lng;
+  if (theMarker != undefined) {
+        mymap.removeLayer(theMarker);
+  };
+theMarker = L.marker([lat,lng]).addTo(mymap);
+    // var radius = e.accuracy / 2;
+    // L.marker(e.latlng).addTo(mymap)
+        // .bindPopup("You are here").openPopup();
+    // L.circle(e.latlng, radius).addTo(mymap);
     storedCoordinates.splice(0)
     storedCoordinates.push(e)
     pullAndSaveCoordinates()
@@ -30,6 +52,18 @@ function onLocationError(e) { //error message
 mymap.on('locationerror', onLocationError); //runs errors
 mymap.on('locationfound', onLocationFound); //runs GPS
 //end
+
+//EXPLANATION:
+//lines 17 - 28 define the marker for a single click
+//if theMarker exists, remove it (23)
+//if theMarker does not esist, create it (27)
+// L = layer, which is a display on top of the map; you are adding and removing a layer from the map
+//lines 33 - 53 are for the GPS; currently removes the marker but not the location bubble
+//also, keeps checking for GPS location on a loop
+
+
+
+
 
 //set map conditions
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -141,6 +175,7 @@ mymap.on('click', function(e) {
 });
 //end of call
 
+
 //saving mouse click coordinates
 function pullAndSaveCoordinates(){
   for(var i in storedCoordinates){
@@ -150,6 +185,7 @@ function pullAndSaveCoordinates(){
     document.getElementById("coordinatesDisplay").innerHTML = latitude + ', ' + longitude
     // console.log(storedCoordinates[i].latlng.lat)
     // console.log(storedCoordinates[i].latlng.lng)
+
 }
 } //end
 
