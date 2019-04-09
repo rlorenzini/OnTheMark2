@@ -21,7 +21,8 @@
     "path": "^0.12.7",
     "pg": "^7.9.0",
     "sequelize": "^5.2.12"
-  },"devDependencies": {
+  },
+  "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.8.1"
   },
   "repository": {
