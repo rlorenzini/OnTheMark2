@@ -52,7 +52,7 @@ server.post('/save-latlng', (req, res) => {
 })
 
 server.get('/', (req, res) => {
-  res.render('index')
+  res.render('login')
 })
 
 
