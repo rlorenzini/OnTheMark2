@@ -1,29 +1,29 @@
 <div>
 <form action="/submit-complaint" method="POST">
   <h4>Complaints</h4>
-  <select name="complaint">
+  <select name="category">
     <option value="signal problem">Signal Problem</option>
     <option value="pothole">Pothole</option>
     <option value="flooding">Flooding</option>
     <option value="street light">Street light</option>
     <option value="missing sign">Missing Sign</option>
     <option value="faded markings">Faded Road Markings</options>
-
-
   </select>
   <input type="hidden" name="id" value="{{persistedUser.id}}">
   <input type="text" name="description" placeholder="Enter Description">
-  <input type="text" name="lat" placeholder="Enter latitude">
-  <input type="text" name="long" placeholder="Enter Longitude">
+  <input id="latInput" type="hidden" name="lat">
+  <input id="longInput" type="hidden" name="long">
   <button type="submit">Submit Complaint</button>
 </form>
 </div>
 
-
-
+<div id="coordinatesDisplay">
+  {{latitude}}
+  {{longitude}}</div>
+<div>
  {{#persistedUser.message}}
     <div class="alert alert-success" role="alert">
      {{persistedUser.message}}
    </div>
  {{/persistedUser.message}}
-</form>
+</div>

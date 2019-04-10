@@ -9,7 +9,7 @@ const express = require('express'),
   bcrypt = require('bcrypt'),
   SALT_ROUNDS = 10,
   session = require('express-session')
-VIEWS_PATH = path.join(__dirname, '/views');
+  VIEWS_PATH = path.join(__dirname, '/views');
 
 server.use(session({
   secret: "fmgffndmf",
@@ -35,8 +35,26 @@ server.use(express.static("public"))
 server.use(bodyParser.urlencoded({ extended: false }))
 // server.use('/leaflet', leafletRoutes)
 server.engine('mustache', mustacheExpress(VIEWS_PATH + '/partials', '.mustache'))
-server.set('views', './views')
+server.set('views', VIEWS_PATH)
 server.set('view engine', 'mustache')
+server.use('/js',express.static('js'))
+server.use(bodyParser.json())
+
+// server.get('/save-latlng',(req,res)=>{
+//   console.log("anything going on here")
+//   res.redirect('/')
+// })
+server.post('/save-latlng',(req,res)=>{
+  console.log(req.body.latitude + "this")
+  let latitude = req.body.latitude
+  let longitude = req.body.longitude
+  res.json({longitude: longitude, latitude: latitude})
+})
+
+server.get('/',(req,res)=>{
+  res.render('index')
+})
+
 
 let storedCoordinates = []
 server.get('/register', (req, res) => {
@@ -103,7 +121,7 @@ server.post('/login', (req, res) => {
             if (req.session) {
               req.session.username = persistedUser.username
               //adding user id to hidden input here
-              res.render('user-page', { persistedUser: persistedUser })
+              res.render('user-page', {persistedUser: persistedUser})
               console.log(persistedUser.username)
               console.log(persistedUser.id)
             }
@@ -164,9 +182,11 @@ server.post('/filter', (req, res) => {
 })
 
 server.post('/submit-complaint', (req, res) => {
+  console.log(req.body.lat)
+  console.log(req.body.long)
   let category = req.body.category
-  let lat = req.body.lat
-  let long = req.body.long
+  let lat = parseFloat(req.body.lat)
+  let long = parseFloat(req.body.long)
   let description = req.body.description
   let userid = req.body.id
   let complaint = models.Complaint.build({
@@ -180,7 +200,7 @@ server.post('/submit-complaint', (req, res) => {
     // console.log(savedComplaint)
   }).then(() => {
     persistedUser.message = "You're complaint has successfully been submitted. The city of Houston thanks you."
-    res.render('user-page', { persistedUser: persistedUser })
+    res.render('user-page', {persistedUser: persistedUser})
   })
 
 })
