@@ -62,6 +62,14 @@ server.get('/register', (req, res) => {
   res.render('register')
 })
 
+server.get('/user-page', (req, res) => {
+  res.render('user-page', { persistedUser: req.session.user })
+})
+
+server.get('/admin', (req, res) => {
+  res.render('admin', { persistedUser: req.session.user })
+})
+
 server.post('/register', (req, res) => {
   console.log("Hello")
   let username = req.body.username
@@ -121,9 +129,10 @@ server.post('/login', (req, res) => {
             persistedUser = user
             if (persistedUser) {
               if (req.session) {
-                req.session.username = persistedUser.username
+                req.session.user = persistedUser
+
                 //adding user id to hidden input here
-                res.render('admin', { persistedUser: persistedUser })
+                res.redirect('/admin')
                 console.log(persistedUser.username)
                 console.log(persistedUser.id)
               }
@@ -132,9 +141,9 @@ server.post('/login', (req, res) => {
             persistedUser = user
             if (persistedUser) {
               if (req.session) {
-                req.session.username = persistedUser.username
+                req.session.user = persistedUser
                 //adding user id to hidden input here
-                res.render('user-page', { persistedUser: persistedUser })
+                res.redirect('/user-page')
                 console.log(persistedUser.username)
                 console.log(persistedUser.id)
               }
