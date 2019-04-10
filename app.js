@@ -48,7 +48,7 @@ server.post('/save-latlng', (req, res) => {
   console.log(req.body.latitude)
   let latitude = req.body.latitude
   let longitude = req.body.longitude
-  res.json({longitude: longitude, latitude: latitude})
+  res.json({ longitude: longitude, latitude: latitude })
 })
 
 server.get('/', (req, res) => {
@@ -59,6 +59,14 @@ server.get('/', (req, res) => {
 let storedCoordinates = []
 server.get('/register', (req, res) => {
   res.render('register')
+})
+
+server.get('/user-page', (req, res) => {
+  res.render('user-page', { persistedUser: req.session.user })
+})
+
+server.get('/admin', (req, res) => {
+  res.render('admin', { persistedUser: req.session.user })
 })
 
 server.post('/register', (req, res) => {
@@ -120,9 +128,10 @@ server.post('/login', (req, res) => {
             persistedUser = user
             if (persistedUser) {
               if (req.session) {
-                req.session.username = persistedUser.username
+                req.session.user = persistedUser
+
                 //adding user id to hidden input here
-                res.render('admin', { persistedUser: persistedUser })
+                res.redirect('/admin')
                 console.log(persistedUser.username)
                 console.log(persistedUser.id)
               }
@@ -131,17 +140,17 @@ server.post('/login', (req, res) => {
             persistedUser = user
             if (persistedUser) {
               if (req.session) {
-                req.session.username = persistedUser.username
+                req.session.user = persistedUser
                 //adding user id to hidden input here
-                res.render('user-page', { persistedUser: persistedUser })
+                res.redirect('/user-page')
                 console.log(persistedUser.username)
                 console.log(persistedUser.id)
               }
             }
           }
           var hour = 3600000
-            req.session.cookie.expires = new Date(Date.now() + hour)
-            req.session.cookie.maxAge = hour
+          req.session.cookie.expires = new Date(Date.now() + hour)
+          req.session.cookie.maxAge = hour
           // render admin page
 
         } else {
@@ -214,7 +223,7 @@ server.post('/submit-complaint', (req, res) => {
     // console.log(savedComplaint)
   }).then(() => {
     persistedUser.message = "You're complaint has successfully been submitted. The city of Houston thanks you."
-    res.render('user-page', {persistedUser: persistedUser})
+    res.render('user-page', { persistedUser: persistedUser })
   })
 
 })
