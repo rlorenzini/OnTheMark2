@@ -123,50 +123,24 @@ server.post('/login', (req, res) => {
               if (req.session) {
                 req.session.username = persistedUser.username
                 //adding user id to hidden input here
-                if (user.admin == true) {
-                  res.render('admin')
-                } else {
-                  res.render('admin', { persistedUser: persistedUser })
-                  console.log(persistedUser.username)
-                  console.log(persistedUser.id)
-                }
+                res.render('admin', { persistedUser: persistedUser })
+                console.log(persistedUser.username)
+                console.log(persistedUser.id)
               }
-            } else {
-              persistedUser = user
-              if (persistedUser) {
-                if (req.session) {
-                  req.session.username = persistedUser.username
-                  //adding user id to hidden input here
-                  if (user.admin == true) {
-                    res.render('admin')
-                  } else {
-                    res.render('user-page', { persistedUser: persistedUser })
-                    console.log(persistedUser.username)
-                    console.log(persistedUser.id)
-                  }
-                }
+            }
+          } else {
+            persistedUser = user
+            if (persistedUser) {
+              if (req.session) {
+                req.session.username = persistedUser.username
+                //adding user id to hidden input here
+                res.render('user-page', { persistedUser: persistedUser })
+                console.log(persistedUser.username)
+                console.log(persistedUser.id)
               }
             }
           }
-          // persistedUser = user
-          // if (persistedUser) {
-          //   if (req.session) {
-          //     req.session.username = persistedUser.username
-          //     //adding user id to hidden input here
-          //     if (user.admin == true) {
-          //       res.render('admin')
-          //     } else {
-          //       res.render('user-page', { persistedUser: persistedUser })
-          //       console.log(persistedUser.username)
-          //       console.log(persistedUser.id)
-          //     }
-          //   }
-          // }
-          // // check for admin
-          // console.log(user.admin)
-          // if (user.admin == true) {
-          //   res.render('admin')
-          // }
+
 
           // render admin page
 
