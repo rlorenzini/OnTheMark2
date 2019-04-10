@@ -23,19 +23,36 @@
   </select>
   <button type="submit">Sort</button>
 </form>
-
+</br>
 <ul>
 {{#result}}
 <div>
 <li>
 <form action="/delete" method="post">
-<div class="jumbotron listbox">
+<div class= "listbox">
 <input type="hidden" name="id" value={{id}}>
-  <h3 class="listheader">{{category}}</h3>
-  <p class="lead">{{description}}</p>
-  <hr class="my-4">
-  <p>{{lat}}, {{long}}</p>
+  <div class="div1">
+  <label>Category:</label>
+  <p>  {{category}}</p>
+  </div>
+
+  <div class ="div1">
+  <label>Description:</label>
+  <p>{{description}}</p>
+  </div>
+  
+  <div class ="div1">
+  <label>Latitude:</label>
+  <p>{{lat}}</p>
+  </div>
+
+  <div class ="div1">
+  <label>Longitude:</label>
+  <p>{{long}}</p>
+  </div>
+  <div class="div2">
   <button type="submit" style="inline-block" class="btn btn-link">Delete</button>
+  </div>
     </form>
 </div>
 {{/result}}
