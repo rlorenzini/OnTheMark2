@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="admin.css"/>
 
 </head>
 
@@ -23,25 +24,24 @@
   <button type="submit">Sort</button>
 </form>
 
+<ul>
+{{#result}}
 <div>
-<ul id="complaintsList">
-  {{#result}}
-  <li style="display: flex;">
-  <div>
-    <form action="/delete" method="post">
-    <input type="hidden" name="id" value={{id}}>
-    <p>{{category}}</p>
-    <p>{{lat}}</p>
-    <p>{{long}}</p>
-    <p>{{description}}</p>
-    <p>{{userid}}</p>
-    <button type="submit">Delete</button>
+<li>
+<form action="/delete" method="post">
+<div class="listbox">
+<input type="hidden" name="id" value={{id}}>
+  <h3 class="listheader">{{category}}</h3>
+  <p class="lead">{{description}}</p>
+  <hr class="my-4">
+  <p>{{lat}}, {{long}}</p>
+  <button type="submit" style="inline-block" class="btn btn-link">Delete</button>
     </form>
-    </div>
-  </li>
-  {{/result}}
-</ul>
 </div>
+{{/result}}
+</li>
+</div>
+</ul>
 
 
 
