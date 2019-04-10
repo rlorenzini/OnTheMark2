@@ -9,16 +9,16 @@ const express = require('express'),
   bcrypt = require('bcrypt'),
   SALT_ROUNDS = 10,
   session = require('express-session')
-  VIEWS_PATH = path.join(__dirname, '/views');
+VIEWS_PATH = path.join(__dirname, '/views');
 
 server.use(session({
   secret: "fmgffndmf",
-  resave : false,
-  saveUninitialized :true
+  resave: false,
+  saveUninitialized: true
 }))
 
 
-server.get('/complaints', (req,res) => {
+server.get('/complaints', (req, res) => {
   res.render('complaints')
 })
 
@@ -71,12 +71,9 @@ server.post('/register', (req, res) => {
           }).then(() => {
             res.redirect('/login')
           })
-
         }
       })
-
     }
-
   })
 })
 
@@ -102,18 +99,18 @@ server.post('/login', (req, res) => {
       bcrypt.compare(password, user.password, (error, result) => {
         if (result) {
           persistedUser = user
-            if (persistedUser){
-                if (req.session){
-                   req.session.username = persistedUser.username
-                   res.redirect('user-PageDemo')
-                   console.log(persistedUser.username)
-                }
+          if (persistedUser) {
+            if (req.session) {
+              req.session.username = persistedUser.username
+              //adding user id to hidden input here
+              res.render('complaints', { persistedUser: persistedUser })
+              console.log(persistedUser.username)
+              console.log(persistedUser.id)
             }
-      
-        
+          }
           // check for admin
           // if (user.admin == true) // render admin page
-          
+
         } else {
           res.render('login', { message: "Invalid username or password." })
         }
@@ -125,14 +122,14 @@ server.post('/login', (req, res) => {
 
 })
 
-server.get('/user-page', (req,res)=>{
+server.get('/user-page', (req, res) => {
   res.render('user-page')
 
 })
 
 //logout code
 
-server.get('/user-PageDemo',(req,res)=>{
+server.get('/user-PageDemo', (req, res) => {
   res.render('user-PageDemo')
 
 })
@@ -142,7 +139,59 @@ server.post('/logout', (req, res) => {
   res.render("login")
 })
 
+// ========== ALL NEW CODE HERE ==============
+server.get('/admin', (req, res) => {
+  models.Complaint.findAll()
+    .then((result) => {
+      res.render('admin', { result: result })
+    })
+})
 
 
+server.post('/filter', (req, res) => {
+  let category = req.body.category
+  models.Complaint.findAll({
+    where: {
+      category: category
+    }
+  }).then((result) => {
+    console.log(result)
+    res.render('admin', { result: result })
+  })
+})
 
+server.post('/submit-complaint', (req, res) => {
+  let category = req.body.category
+  let lat = req.body.lat
+  let long = req.body.long
+  let description = req.body.description
+  let userid = req.body.id
+  let complaint = models.Complaint.build({
+    category: category,
+    lat: lat,
+    long: long,
+    description: description,
+    userid: userid
+  })
+  complaint.save().then((savedComplaint) => {
+    // console.log(savedComplaint)
+  }).then(() => {
+    persistedUser.message = "You're complaint has successfully been submitted. The city of Houston thanks you."
+    res.render('complaints', { persistedUser: persistedUser })
+  })
+
+})
+
+server.post('/delete', (req, res) => {
+  deleteID = req.body.id
+  models.Complaint.destroy({
+    where: {
+      id: deleteID
+    }
+  }).then(() => {
+    res.redirect('/admin')
+  })
+})
+
+// ============ NEW CODE ENDS HERE =============
 server.listen(port, () => { console.log(`Server is running on port ${port}.`) })
