@@ -9,7 +9,7 @@ const express = require('express'),
   bcrypt = require('bcrypt'),
   SALT_ROUNDS = 10,
   session = require('express-session')
-  VIEWS_PATH = path.join(__dirname, '/views');
+VIEWS_PATH = path.join(__dirname, '/views');
 
 server.use(session({
   secret: "fmgffndmf",
@@ -37,14 +37,14 @@ server.use(bodyParser.urlencoded({ extended: false }))
 server.engine('mustache', mustacheExpress(VIEWS_PATH + '/partials', '.mustache'))
 server.set('views', VIEWS_PATH)
 server.set('view engine', 'mustache')
-server.use('/js',express.static('js'))
+server.use('/js', express.static('js'))
 server.use(bodyParser.json())
 
 // server.get('/save-latlng',(req,res)=>{
 //   console.log("anything going on here")
 //   res.redirect('/')
 // })
-server.post('/save-latlng',(req,res)=>{
+server.post('/save-latlng', (req, res) => {
   console.log(req.body.latitude)
   let latitude = req.body.latitude
   console.log(latitude)
@@ -52,7 +52,7 @@ server.post('/save-latlng',(req,res)=>{
   res.json(latitude)
 })
 
-server.get('/',(req,res)=>{
+server.get('/', (req, res) => {
   res.render('index')
 })
 
@@ -117,18 +117,58 @@ server.post('/login', (req, res) => {
     if (user) { //check for user password
       bcrypt.compare(password, user.password, (error, result) => {
         if (result) {
-          persistedUser = user
-          if (persistedUser) {
-            if (req.session) {
-              req.session.username = persistedUser.username
-              //adding user id to hidden input here
-              res.render('complaints', { persistedUser: persistedUser })
-              console.log(persistedUser.username)
-              console.log(persistedUser.id)
+          if (user.admin == true) {
+            persistedUser = user
+            if (persistedUser) {
+              if (req.session) {
+                req.session.username = persistedUser.username
+                //adding user id to hidden input here
+                if (user.admin == true) {
+                  res.render('admin')
+                } else {
+                  res.render('admin', { persistedUser: persistedUser })
+                  console.log(persistedUser.username)
+                  console.log(persistedUser.id)
+                }
+              }
+            } else {
+              persistedUser = user
+              if (persistedUser) {
+                if (req.session) {
+                  req.session.username = persistedUser.username
+                  //adding user id to hidden input here
+                  if (user.admin == true) {
+                    res.render('admin')
+                  } else {
+                    res.render('user-page', { persistedUser: persistedUser })
+                    console.log(persistedUser.username)
+                    console.log(persistedUser.id)
+                  }
+                }
+              }
             }
           }
-          // check for admin
-          // if (user.admin == true) // render admin page
+          // persistedUser = user
+          // if (persistedUser) {
+          //   if (req.session) {
+          //     req.session.username = persistedUser.username
+          //     //adding user id to hidden input here
+          //     if (user.admin == true) {
+          //       res.render('admin')
+          //     } else {
+          //       res.render('user-page', { persistedUser: persistedUser })
+          //       console.log(persistedUser.username)
+          //       console.log(persistedUser.id)
+          //     }
+          //   }
+          // }
+          // // check for admin
+          // console.log(user.admin)
+          // if (user.admin == true) {
+          //   res.render('admin')
+          // }
+
+          // render admin page
 
         } else {
           res.render('login', { message: "Invalid username or password." })

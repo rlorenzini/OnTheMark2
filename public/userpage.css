@@ -2,3 +2,8 @@
   display: flex;
   justify-content: center;
 }
+
+.userpagebox #mapid {
+  height: 500px;
+  width: 500px;
+}
