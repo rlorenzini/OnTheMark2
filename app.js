@@ -45,11 +45,10 @@ server.use(bodyParser.json())
 //   res.redirect('/')
 // })
 server.post('/save-latlng',(req,res)=>{
-  console.log(req.body.latitude)
+  console.log(req.body.latitude + "this")
   let latitude = req.body.latitude
-  console.log(latitude)
-  console.log("is this here or naw")
-  res.json(latitude)
+  let longitude = req.body.longitude
+  res.json({longitude: longitude, latitude: latitude})
 })
 
 server.get('/',(req,res)=>{
@@ -122,7 +121,7 @@ server.post('/login', (req, res) => {
             if (req.session) {
               req.session.username = persistedUser.username
               //adding user id to hidden input here
-              res.render('complaints', { persistedUser: persistedUser })
+              res.render('user-page', {persistedUser: persistedUser})
               console.log(persistedUser.username)
               console.log(persistedUser.id)
             }
@@ -183,9 +182,11 @@ server.post('/filter', (req, res) => {
 })
 
 server.post('/submit-complaint', (req, res) => {
+  console.log(req.body.lat)
+  console.log(req.body.long)
   let category = req.body.category
-  let lat = req.body.lat
-  let long = req.body.long
+  let lat = parseFloat(req.body.lat)
+  let long = parseFloat(req.body.long)
   let description = req.body.description
   let userid = req.body.id
   let complaint = models.Complaint.build({
@@ -199,7 +200,7 @@ server.post('/submit-complaint', (req, res) => {
     // console.log(savedComplaint)
   }).then(() => {
     persistedUser.message = "You're complaint has successfully been submitted. The city of Houston thanks you."
-    res.render('complaints', { persistedUser: persistedUser })
+    res.render('user-page', {persistedUser: persistedUser})
   })
 
 })
