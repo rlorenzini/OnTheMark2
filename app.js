@@ -44,10 +44,8 @@ server.use(bodyParser.json())
 //   console.log("anything going on here")
 //   res.redirect('/')
 // })
-=======
 server.post('/save-latlng', (req, res) => {
   console.log(req.body.latitude)
->>>>>>> adminauth
   let latitude = req.body.latitude
   let longitude = req.body.longitude
   res.json({longitude: longitude, latitude: latitude})
@@ -118,57 +116,32 @@ server.post('/login', (req, res) => {
     if (user) { //check for user password
       bcrypt.compare(password, user.password, (error, result) => {
         if (result) {
-=======
           if (user.admin == true) {
             persistedUser = user
             if (persistedUser) {
               if (req.session) {
                 req.session.username = persistedUser.username
                 //adding user id to hidden input here
-                if (user.admin == true) {
-                  res.render('admin')
-                } else {
-                  res.render('admin', { persistedUser: persistedUser })
-                  console.log(persistedUser.username)
-                  console.log(persistedUser.id)
-                }
+                res.render('admin', { persistedUser: persistedUser })
+                console.log(persistedUser.username)
+                console.log(persistedUser.id)
               }
-            } else {
-              persistedUser = user
-              if (persistedUser) {
-                if (req.session) {
-                  req.session.username = persistedUser.username
-                  //adding user id to hidden input here
-                  if (user.admin == true) {
-                    res.render('admin')
-                  } else {
-                    res.render('user-page', { persistedUser: persistedUser })
-                    console.log(persistedUser.username)
-                    console.log(persistedUser.id)
-                  }
-                }
+            }
+          } else {
+            persistedUser = user
+            if (persistedUser) {
+              if (req.session) {
+                req.session.username = persistedUser.username
+                //adding user id to hidden input here
+                res.render('user-page', { persistedUser: persistedUser })
+                console.log(persistedUser.username)
+                console.log(persistedUser.id)
               }
             }
           }
-          // persistedUser = user
-          // if (persistedUser) {
-          //   if (req.session) {
-          //     req.session.username = persistedUser.username
-          //     //adding user id to hidden input here
-          //     if (user.admin == true) {
-          //       res.render('admin')
-          //     } else {
-          //       res.render('user-page', { persistedUser: persistedUser })
-          //       console.log(persistedUser.username)
-          //       console.log(persistedUser.id)
-          //     }
-          //   }
-          // }
-          // // check for admin
-          // console.log(user.admin)
-          // if (user.admin == true) {
-          //   res.render('admin')
-          // }
+          var hour = 3600000
+            req.session.cookie.expires = new Date(Date.now() + hour)
+            req.session.cookie.maxAge = hour
 
           // render admin page
 
@@ -180,7 +153,6 @@ server.post('/login', (req, res) => {
   }).catch(() => {
     res.render('login', { message: "Invalid username or password. Please Register" })
   })
-
 })
 
 server.get('/user-page', (req, res) => {
