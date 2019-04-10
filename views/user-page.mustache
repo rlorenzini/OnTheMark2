@@ -25,18 +25,21 @@
     crossorigin="anonymous">
     <link rel="stylesheet" href="userpage.css"/>
     <link rel="stylesheet" href="styling.css">
+
+    <link rel="stylesheet" href="styling.css">
+
 </head>
 <body>
   <h1> Welcome to On The Mark! </h2>
     <p> Please click on the map below and select your complaint. Once your complaint is submitted, our staff will review the issue and start the procedure to fix the issue. Thank you for help!</p>
   <div class="userpagebox">
-      <div id="mapid">
-      
-     </div>
+
+      <div id='mapid' style="width: 500px; height: 500px;">
+      </div>
      <div>
      {{>complaints}}
      </div>
-   </div>
+</div>
 </body>
 
 <script type="text/javascript" src="/js/mapApp.js"></script>
