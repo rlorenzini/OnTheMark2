@@ -6,7 +6,24 @@
     padding : 0;
 }
 
-.jumbotron{
-    padding-top: 10px!important
-    padding-bottom : 10px!important
+
+
+.div1{
+    padding-left : 20px;
+    display:flex;
+    flex-direction: row;
+    background-color: rgba(0,0,0,.075)
+
+}
+.div2{
+    background-color: rgba(0,0,0,.075);
+    margin-bottom: 10px;
+    padding-left : 7px;
+}
+li{
+    list-style: none ;
+}
+
+label{
+    padding-right : 10px;
 }
