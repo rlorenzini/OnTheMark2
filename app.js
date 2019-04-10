@@ -9,7 +9,7 @@ const express = require('express'),
   bcrypt = require('bcrypt'),
   SALT_ROUNDS = 10,
   session = require('express-session')
-VIEWS_PATH = path.join(__dirname, '/views');
+  VIEWS_PATH = path.join(__dirname, '/views');
 
 server.use(session({
   secret: "fmgffndmf",
@@ -35,8 +35,27 @@ server.use(express.static("public"))
 server.use(bodyParser.urlencoded({ extended: false }))
 // server.use('/leaflet', leafletRoutes)
 server.engine('mustache', mustacheExpress(VIEWS_PATH + '/partials', '.mustache'))
-server.set('views', './views')
+server.set('views', VIEWS_PATH)
 server.set('view engine', 'mustache')
+server.use('/js',express.static('js'))
+server.use(bodyParser.json())
+
+// server.get('/save-latlng',(req,res)=>{
+//   console.log("anything going on here")
+//   res.redirect('/')
+// })
+server.post('/save-latlng',(req,res)=>{
+  console.log(req.body.latitude)
+  let latitude = req.body.latitude
+  console.log(latitude)
+  console.log("is this here or naw")
+  res.json(latitude)
+})
+
+server.get('/',(req,res)=>{
+  res.render('index')
+})
+
 
 let storedCoordinates = []
 server.get('/register', (req, res) => {

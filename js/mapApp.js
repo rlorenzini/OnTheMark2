@@ -13,6 +13,27 @@ mymap.setMaxBounds([
 ]);
 //end of max
 
+function onMapClick(e){
+  fetch('http://localhost:3000/save-latlng',{
+    method: 'POST',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body: JSON.stringify({
+      latitude: e.latlng.lat,
+      longitude: e.latlng.lng,
+    })
+  })
+  .then((response) => response.json())
+  .then((json) => {
+    console.log("mapApp.js is still working")
+    console.log(e.latlng)
+    document.getElementById('blue').innerHTML = json
+  })
+
+}
+mymap.on('click',onMapClick)
+
 // only one marker at a time; doesn't remove GPS marker
 var theMarker = {};
 
@@ -179,7 +200,7 @@ mymap.on('click', function(e) {
 //saving mouse click coordinates
 function pullAndSaveCoordinates(){
   for(var i in storedCoordinates){
-    console.log(storedCoordinates[i.length-1].latlng) //storing all clicks. Need to only store LAST click.
+    //console.log(storedCoordinates[i.length-1].latlng) //storing all clicks. Need to only store LAST click.
     let latitude = storedCoordinates[i].latlng.lat
     let longitude = storedCoordinates[i].latlng.lng
     document.getElementById("coordinatesDisplay").innerHTML = latitude + ', ' + longitude
