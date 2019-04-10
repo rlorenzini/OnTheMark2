@@ -1,0 +1,24 @@
+body{
+    background-color : rgba(0,0,0,.075) !important;
+}
+
+h2{
+ color : blue
+}
+
+.container{
+ width : 350px !important;
+ border : black;
+}
+.btndiv{
+    display : flex;
+    justify-content: space-between;
+}
+.formstyle{
+    border : 2px solid grey;  
+    padding :15px;
+}
+
+.navstyle{
+    justify-content: space-between;
+}
