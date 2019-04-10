@@ -105,7 +105,7 @@ server.post('/login', (req, res) => {
             if (persistedUser){
                 if (req.session){
                    req.session.username = persistedUser.username
-                   res.redirect('user-page')
+                   res.redirect('user-PageDemo')
                    console.log(persistedUser.username)
                 }
             }
@@ -131,8 +131,15 @@ server.get('/user-page', (req,res)=>{
 })
 
 //logout code
+
+server.get('/user-PageDemo',(req,res)=>{
+  res.render('user-PageDemo')
+
+})
 server.post('/logout', (req, res) => {
-  res.destroy()
+  req.session.destroy()
+  console.log("route working")
+  res.render("login")
 })
 
 server.post('/complaints', (req, res) => {
