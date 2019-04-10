@@ -44,9 +44,6 @@ server.use(bodyParser.json())
 //   console.log("anything going on here")
 //   res.redirect('/')
 // })
-<<<<<<< HEAD
-server.post('/save-latlng',(req,res)=>{
-  console.log(req.body.latitude + "this")
 =======
 server.post('/save-latlng', (req, res) => {
   console.log(req.body.latitude)
@@ -121,15 +118,6 @@ server.post('/login', (req, res) => {
     if (user) { //check for user password
       bcrypt.compare(password, user.password, (error, result) => {
         if (result) {
-<<<<<<< HEAD
-          persistedUser = user
-          if (persistedUser) {
-            if (req.session) {
-              req.session.username = persistedUser.username
-              //adding user id to hidden input here
-              res.render('user-page', {persistedUser: persistedUser})
-              console.log(persistedUser.username)
-              console.log(persistedUser.id)
 =======
           if (user.admin == true) {
             persistedUser = user
@@ -160,7 +148,6 @@ server.post('/login', (req, res) => {
                   }
                 }
               }
->>>>>>> adminauth
             }
           }
           // persistedUser = user
