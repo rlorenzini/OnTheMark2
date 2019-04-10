@@ -142,7 +142,6 @@ server.post('/login', (req, res) => {
           var hour = 3600000
             req.session.cookie.expires = new Date(Date.now() + hour)
             req.session.cookie.maxAge = hour
-
           // render admin page
 
         } else {
