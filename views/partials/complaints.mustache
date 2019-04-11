@@ -1,6 +1,7 @@
-<div>
+<div id="formDivContainer">
+<div id="formDiv">
 <form action="/submit-complaint" method="POST">
-  <h4>Complaints</h4>
+  <h4 class="spacing">Complaints</h4>
   <select name="category">
     <option value="signal_problem">Signal Problem</option>
     <option value="pothole">Pothole</option>
@@ -16,14 +17,14 @@
   <button type="submit">Submit Complaint</button>
 </form>
 </div>
-
-<div id="coordinatesDisplay">
-  {{latitude}}
-  {{longitude}}</div>
-<div>
- {{#persistedUser.message}}
-    <div class="alert alert-success" role="alert">
-     {{persistedUser.message}}
-   </div>
- {{/persistedUser.message}}
+    <div id="coordinatesDisplay">
+      {{latitude}}
+      {{longitude}}</div>
+    <div>
+    {{#persistedUser.message}}
+        <div class="alert alert-success" role="alert">
+        {{persistedUser.message}}
+      </div>
+    {{/persistedUser.message}}
+  </div>
 </div>
