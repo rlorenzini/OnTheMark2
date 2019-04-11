@@ -14,7 +14,7 @@ VIEWS_PATH = path.join(__dirname, '/views');
 server.use(session({
   secret: "fmgffndmf",
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false
 }))
 
 
@@ -49,6 +49,18 @@ server.post('/save-latlng', (req, res) => {
   let latitude = req.body.latitude
   let longitude = req.body.longitude
   res.json({ longitude: longitude, latitude: latitude })
+})
+
+function validateLogin(req, res, next) {
+  if (req.session.username) {
+    next()
+  } else {
+    res.redirect('/login')
+  }
+}
+
+server.all('/views/*', validateLogin, (req, res, next) => {
+  next()
 })
 
 server.get('/', (req, res) => {
