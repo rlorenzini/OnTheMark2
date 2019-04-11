@@ -51,16 +51,24 @@ server.post('/save-latlng', (req, res) => {
   let longitude = req.body.longitude
   res.json({ longitude: longitude, latitude: latitude })
 })
-
+function validateAdmin(req, res, next) {
+  if (req.session.user.admin == true) {
+    console.log(req.session.admin)
+    next()
+  } else {
+    console.log(req.session.admin)
+    res.redirect('/user-page')
+  }
+}
 function validateLogin(req, res, next) {
   console.log(req.session)
   if (req.session.user) {
-    console.log('true path')
     next()
   } else {
-    console.log('false path')
+    console.log('user path')
 
     res.redirect('/login')
+
   }
 }
 
@@ -202,7 +210,7 @@ server.post('/complaints', (req, res) => {
   console.log(req.body.complaints)
 })
 
-server.get('/admin', validateLogin, (req, res) => {
+server.get('/admin', validateLogin, validateAdmin, (req, res) => {
   models.Complaint.findAll()
     .then((result) => {
       res.render('admin', { result: result, persistedUser: req.session.user })
@@ -244,7 +252,7 @@ server.post('/submit-complaint', (req, res) => {
     res.render('user-page', { persistedUser: persistedUser })
   })
 })
-server.get('/submit-complaint',(req,res)=>{
+server.get('/submit-complaint', (req, res) => {
   res.redirect('user-page')
 })
 
