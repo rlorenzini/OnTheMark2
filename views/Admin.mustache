@@ -15,14 +15,20 @@
 {{>navuser}}
 <h2>Admin Page</h2>
 <form action='/filter' method="POST">
-  <select name="category">
+  <select required name="category">
+    <option value="" diabled selected>Complaint Category<option>
     <option value="signal_problem">Signal Problem<option>
     <option value="pothole">Pothole<option>
     <option value="flooding">Flooding<option>
     <option value="street_light">Street Light<option>
+    <option value="missing_sign">Missing Sign</option>
+    <option value="faded_markings">Faded Road Markings</options>
   </select>
   <button type="submit">Sort</button>
 </form>
+
+<h4 style="margin-left: 20%; margin-top: 2%;">{{headerCat}}</h4>
+
 </br>
 <ul>
 {{#result}}

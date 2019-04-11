@@ -226,7 +226,10 @@ server.post('/filter', (req, res) => {
     }
   }).then((result) => {
     console.log(result)
-    res.render('admin', { result: result })
+    res.render('admin', {
+      result: result,
+      headerCat: category
+    })
   })
 })
 
@@ -238,9 +241,9 @@ server.post('/submit-complaint', (req, res) => {
   let userid = req.body.id
   let lat = req.body.lat
   let long = req.body.long
-  if(lat == '' || long == ''){
+  if (lat == '' || long == '') {
     persistedUser.message = "Please provide coordinates."
-    res.render('user-page', {persistedUser: persistedUser})
+    res.render('user-page', { persistedUser: persistedUser })
   }
   else {
     lat = parseFloat(lat)
