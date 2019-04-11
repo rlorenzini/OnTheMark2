@@ -2,12 +2,12 @@
 <form action="/submit-complaint" method="POST">
   <h4>Complaints</h4>
   <select name="category">
-    <option value="signal problem">Signal Problem</option>
+    <option value="signal_problem">Signal Problem</option>
     <option value="pothole">Pothole</option>
     <option value="flooding">Flooding</option>
-    <option value="street light">Street light</option>
-    <option value="missing sign">Missing Sign</option>
-    <option value="faded markings">Faded Road Markings</options>
+    <option value="street_light">Street light</option>
+    <option value="missing_sign">Missing Sign</option>
+    <option value="faded_markings">Faded Road Markings</options>
   </select>
   <input type="hidden" name="id" value="{{persistedUser.id}}">
   <input type="text" name="description" placeholder="Enter Description">
