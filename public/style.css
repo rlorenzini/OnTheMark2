@@ -7,7 +7,7 @@ h2{
 }
 
 .container{
- width : 350px !important;
+ width : 21.875rem !important;
  border : black;
 }
 .btndiv{
@@ -15,7 +15,7 @@ h2{
     justify-content: space-between;
 }
 .formstyle{
-    border : 2px solid grey;  
+    border : 2px solid grey;
     padding :15px;
 }
 
