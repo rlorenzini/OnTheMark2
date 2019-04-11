@@ -16,23 +16,6 @@ mymap.setMaxBounds([
 function onMapClick(e){
   document.getElementById('latInput').value = e.latlng.lat
   document.getElementById('longInput').value = e.latlng.lng
-  // fetch('http://localhost:3000/save-latlng',{
-  //   method: 'POST',
-  //   headers:{
-  //     'Content-Type':'application/json'
-  //   },
-  //   body: JSON.stringify({
-  //     latitude: e.latlng.lat,
-  //     longitude: e.latlng.lng,
-  //   })
-  // })
-  // .then((response) => response.json())
-  // .then((json) => {
-  //   console.log("mapApp.js is still working")
-  //   console.log(json)
-    // document.getElementById('coordinatesDisplay').innerHTML = `${json.longitude} ${json.latitude}`
-  // })
-
 }
 mymap.on('click',onMapClick)
 
@@ -68,6 +51,8 @@ theMarker = L.marker([lat,lng]).addTo(mymap);
     storedCoordinates.splice(0)
     storedCoordinates.push(e)
     pullAndSaveCoordinates()
+    document.getElementById('latInput').value = e.latlng.lat
+    document.getElementById('longInput').value = e.latlng.lng
 }
 function onLocationError(e) { //error message
     alert(e.message);
@@ -176,7 +161,8 @@ L.Control.Coordinates = L.Control.extend({
 		if (obj.latlng) {
 			L.DomUtil.get(this._lat).innerHTML = '<strong>' + this.options.latitudeText + ':</strong> ' + obj.latlng.lat.toFixed(this.options.precision).toString();
 			L.DomUtil.get(this._lng).innerHTML = '<strong>' + this.options.longitudeText + ':</strong> ' + obj.latlng.lng.toFixed(this.options.precision).toString();
-		}
+
+    }
 	}
 });
 //end of mouse click coordinates

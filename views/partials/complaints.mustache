@@ -1,22 +1,22 @@
-<div id = "formDivContainer">
-  <div id = "formDiv">
-    <form action="/submit-complaint" method="POST">
-      <h4 class = "spacing">Complaints</h4>
-      <select name="category" class = "spacing">
-        <option value="signal problem">Signal Problem</option>
-        <option value="pothole">Pothole</option>
-        <option value="flooding">Flooding</option>
-        <option value="street light">Street light</option>
-        <option value="missing sign">Missing Sign</option>
-        <option value="faded markings">Faded Road Markings</options>
-      </select>
-      <input type="hidden" name="id" value="{{persistedUser.id}}">
-      <input type="text" name="description" placeholder="Enter Description" class="elementspacing">
-      <input id="latInput" type="hidden" name="lat">
-      <input id="longInput" type="hidden" name="long">
-      <button type="submit" class="elementspacing">Submit Complaint</button>
-    </form>
-
+<div id="formDivContainer">
+<div id="formDiv">
+<form action="/submit-complaint" method="POST">
+  <h4 class="spacing">Complaints</h4>
+  <select name="category">
+    <option value="signal_problem">Signal Problem</option>
+    <option value="pothole">Pothole</option>
+    <option value="flooding">Flooding</option>
+    <option value="street_light">Street light</option>
+    <option value="missing_sign">Missing Sign</option>
+    <option value="faded_markings">Faded Road Markings</options>
+  </select>
+  <input type="hidden" name="id" value="{{persistedUser.id}}">
+  <input type="text" name="description" placeholder="Enter Description">
+  <input id="latInput" type="hidden" name="lat">
+  <input id="longInput" type="hidden" name="long">
+  <button type="submit">Submit Complaint</button>
+</form>
+</div>
     <div id="coordinatesDisplay">
       {{latitude}}
       {{longitude}}</div>
