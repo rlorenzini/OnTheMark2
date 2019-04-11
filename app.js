@@ -18,7 +18,9 @@ server.use(session({
   saveUninitialized: false
 }))
 
-
+server.get('/home', (req, res) => {
+  res.render('home')
+})
 server.get('/complaints', (req, res) => {
   res.render('complaints')
 })
