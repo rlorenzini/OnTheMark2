@@ -231,26 +231,35 @@ server.post('/filter', (req, res) => {
 })
 
 server.post('/submit-complaint', (req, res) => {
-  console.log(req.body.lat)
-  console.log(req.body.long)
+  console.log(req.body.lat == "")
+  console.log(req.body.long == "")
   let category = req.body.category
-  let lat = parseFloat(req.body.lat)
-  let long = parseFloat(req.body.long)
   let description = req.body.description
   let userid = req.body.id
-  let complaint = models.Complaint.build({
-    category: category,
-    lat: lat,
-    long: long,
-    description: description,
-    userid: userid
-  })
-  complaint.save().then((savedComplaint) => {
-    // console.log(savedComplaint)
-  }).then(() => {
-    persistedUser.message = "You're complaint has successfully been submitted. The city of Houston thanks you."
-    res.render('user-page', { persistedUser: persistedUser })
-  })
+  let lat = req.body.lat
+  let long = req.body.long
+  if(lat == '' || long == ''){
+    persistedUser.message = "Please provide coordinates."
+    res.render('user-page', {persistedUser: persistedUser})
+  }
+  else {
+    lat = parseFloat(lat)
+    long = parseFloat(long)
+    let complaint = models.Complaint.build({
+      category: category,
+      lat: lat,
+      long: long,
+      description: description,
+      userid: userid
+    })
+    complaint.save().then((savedComplaint) => {
+      // console.log(savedComplaint)
+    }).then(() => {
+      persistedUser.message = "You're complaint has successfully been submitted. The city of Houston thanks you."
+      res.render('user-page', { persistedUser: persistedUser })
+    })
+  }
+
 })
 server.get('/submit-complaint', (req, res) => {
   res.redirect('user-page')
