@@ -222,17 +222,32 @@ server.get('/admin', validateLogin, validateAdmin, (req, res) => {
 
 server.post('/filter', (req, res) => {
   let category = req.body.category
-  models.Complaint.findAll({
-    where: {
-      category: category
-    }
-  }).then((result) => {
-    console.log(result)
-    res.render('admin', {
-      result: result,
-      headerCat: category
+  if (category == "view_all") {
+    models.Complaint.findAll()
+      .then((result) => {
+        console.log(result)
+        //styles the header for sorting
+        let styledCat = styleCategory(category)
+        res.render('admin', {
+          result: result,
+          headerCat: styledCat
+        })
+      })
+  } else {
+    models.Complaint.findAll({
+      where: {
+        category: category
+      }
+    }).then((result) => {
+      console.log(result)
+      //styles the header for sorting
+      let styledCat = styleCategory(category)
+      res.render('admin', {
+        result: result,
+        headerCat: styledCat
+      })
     })
-  })
+  }
 })
 
 server.post('/submit-complaint', (req, res) => {
@@ -284,6 +299,38 @@ server.post('/delete', (req, res) => {
 server.use(function (req, res, next) {
   res.status(404).send("Sorry can't find that!")
 });
+
+function styleCategory(category) {
+  let result = ""
+  switch (category) {
+    case "view_all":
+      result = "All Complaints"
+      break;
+    case "signal_problem":
+      result = "Signal Problem Complaints"
+      break;
+    case "pothole":
+      result = "Pothole Complaints"
+      break;
+    case "flooding":
+      result = "Flooding Complaints"
+      break;
+    case "street_light":
+      result = "Street Light Complaints"
+      break;
+    case "missing_sign":
+      result = "Missing Sign Complaints"
+      break;
+    case "faded_markings":
+      result = "Faded Road Marking Complaints"
+      break;
+
+    default:
+      break;
+  }
+  return result
+}
+
 
 // ============ NEW CODE ENDS HERE =============
 server.listen(port, () => { console.log(`Server is running on port ${port}.`) })
