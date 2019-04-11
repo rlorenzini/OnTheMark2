@@ -1,15 +1,29 @@
 .userpagebox {
   display: flex;
+  /* align-items: center; */
+  /* justify-content: center; */
 
 }
 
-.userpagebox #mapid {
-  height: 500px;
-  width: 500px;
-  margin-right:-100px;
-  margin-left:100px;
+.userpagebox #mapDiv {
+  margin-left: 12%;
+  margin-right: 0.5%;
+  width: auto;
+  max-width: 520rem;
+  height: 100%;
 }
+#mapDiv #mapid {
+  width: 100%;
+  height: 100%;
+  /* display: flex; */
+  /* justify-content: center; */
 
+}
+.leaflet-container {
+  width: 100%;
+  max-width: 30.625rem;
+  height: auto;
+}
 body{
   background-color : rgba(0,0,0,.075) !important;
 }
@@ -20,26 +34,30 @@ h1{
 }
 
 p{
-  margin-left: 17%;
+  margin-left: 12%;
   margin-right : 50%
 }
 
 /* .spacing{
-  margin-left : 2%!important;
-
+  margin-left : 2%;
+ title "Complaints"
 } */
-
-#mapDiv {
-  display: flex;
-  justify-content: center;
-  
+#spacing {
+  align-self: flex-start;
+  margin-left: 0.5%;
+  margin-right: 5%;
+  width: auto;
+  height: 100%;
 }
 
 #formDivContainer {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
-
+#formDivContainer input {
+  margin: 2%;
+}
 .elementspacing{
   margin-top: 7%;
 }
