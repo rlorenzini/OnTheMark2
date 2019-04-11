@@ -12,9 +12,10 @@ const express = require('express'),
 VIEWS_PATH = path.join(__dirname, '/views');
 
 server.use(session({
+  key: "user_sid",
   secret: "fmgffndmf",
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false
 }))
 
 
@@ -51,7 +52,24 @@ server.post('/save-latlng', (req, res) => {
   res.json({ longitude: longitude, latitude: latitude })
 })
 
+function validateLogin(req, res, next) {
+  console.log(req.session)
+  if (req.session.user) {
+    console.log('true path')
+    next()
+  } else {
+    console.log('false path')
+
+    res.redirect('/login')
+  }
+}
+
+// server.all('/*', validateLogin, (req, res, next) => {
+//   next()
+// })
+
 server.get('/', (req, res) => {
+  console.log(req.session)
   res.render('login')
 })
 
@@ -61,13 +79,13 @@ server.get('/register', (req, res) => {
   res.render('register')
 })
 
-server.get('/user-page', (req, res) => {
+server.get('/user-page', validateLogin, (req, res) => {
   res.render('user-page', { persistedUser: req.session.user })
 })
 
-server.get('/admin', (req, res) => {
-  res.render('admin', { persistedUser: req.session.user })
-})
+// server.get('/admin', (req, res) => {
+//   res.render('admin', { persistedUser: req.session.user })
+// })
 
 server.post('/register', (req, res) => {
   console.log("Hello")
@@ -163,7 +181,7 @@ server.post('/login', (req, res) => {
   })
 })
 
-server.get('/user-page', (req, res) => {
+server.get('/user-page', validateLogin, (req, res) => {
   res.render('user-page')
 
 })
@@ -184,10 +202,10 @@ server.post('/complaints', (req, res) => {
   console.log(req.body.complaints)
 })
 
-server.get('/admin', (req, res) => {
+server.get('/admin', validateLogin, (req, res) => {
   models.Complaint.findAll()
     .then((result) => {
-      res.render('admin', { result: result })
+      res.render('admin', { result: result, persistedUser: req.session.user })
     })
 })
 
@@ -240,6 +258,10 @@ server.post('/delete', (req, res) => {
     res.redirect('/admin')
   })
 })
+
+server.use(function (req, res, next) {
+  res.status(404).send("Sorry can't find that!")
+});
 
 // ============ NEW CODE ENDS HERE =============
 server.listen(port, () => { console.log(`Server is running on port ${port}.`) })
