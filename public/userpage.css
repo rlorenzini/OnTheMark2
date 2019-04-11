@@ -8,13 +8,13 @@
 .userpagebox #mapDiv {
   margin-left: 12%;
   margin-right: 0.5%;
-  width: auto;
+  width: 31.25rem;
   max-width: 520rem;
-  height: 100%;
+  height: 31.25rem;
 }
 #mapDiv #mapid {
-  width: 100%;
-  height: 100%;
+  width: 31.25rem;
+  height: 31.25rem;
   /* display: flex; */
   /* justify-content: center; */
 
