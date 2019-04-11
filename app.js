@@ -225,7 +225,9 @@ server.post('/submit-complaint', (req, res) => {
     persistedUser.message = "You're complaint has successfully been submitted. The city of Houston thanks you."
     res.render('user-page', { persistedUser: persistedUser })
   })
-
+})
+server.get('/submit-complaint',(req,res)=>{
+  res.redirect('user-page')
 })
 
 server.post('/delete', (req, res) => {
