@@ -8,7 +8,7 @@
     <option value="flooding">Flooding</option>
     <option value="street_light">Street light</option>
     <option value="missing_sign">Missing Sign</option>
-    <option value="faded_markings">Faded Road Markings</options>
+    <option value="faded_markings">Faded Road Markings</option>
   </select>
   <input type="hidden" name="id" value="{{persistedUser.id}}">
   <input type="text" name="description" placeholder="Enter Description">
@@ -17,9 +17,6 @@
   <button type="submit">Submit Complaint</button>
 </form>
 </div>
-    <div id="coordinatesDisplay">
-      {{latitude}}
-      {{longitude}}</div>
     <div>
     {{#persistedUser.message}}
         <div class="alert alert-success" role="alert">
