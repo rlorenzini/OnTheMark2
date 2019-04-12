@@ -89,9 +89,7 @@ server.get('/register', (req, res) => {
   res.render('register')
 })
 
-server.get('/user-page', validateLogin, (req, res) => {
-  res.render('user-page', { persistedUser: req.session.user })
-})
+server.get('/user-page', admiLinkCheck, validateLogin, (req, res) => { })
 
 // server.get('/admin', (req, res) => {
 //   res.render('admin', { persistedUser: req.session.user })
@@ -160,8 +158,8 @@ server.post('/login', (req, res) => {
 
                 //adding user id to hidden input here
                 res.redirect('/admin')
-                console.log(persistedUser.username)
-                console.log(persistedUser.id)
+                // console.log(persistedUser.username)
+                // console.log(persistedUser.id)
               }
             }
           } else {
@@ -171,8 +169,8 @@ server.post('/login', (req, res) => {
                 req.session.user = persistedUser
                 //adding user id to hidden input here
                 res.redirect('/user-page')
-                console.log(persistedUser.username)
-                console.log(persistedUser.id)
+                // console.log(persistedUser.username)
+                // console.log(persistedUser.id)
               }
             }
           }
@@ -215,7 +213,7 @@ server.post('/complaints', (req, res) => {
 server.get('/admin', validateLogin, validateAdmin, (req, res) => {
   models.Complaint.findAll()
     .then((result) => {
-      res.render('admin', { result: result, persistedUser: req.session.user })
+      res.render('admin', { result: result, persistedUser: req.session.user, headerCat: "All Complaints" })
     })
 })
 
@@ -259,7 +257,15 @@ server.post('/submit-complaint', (req, res) => {
   let lat = req.body.lat
   let long = req.body.long
   if (lat == '' || long == '') {
+
     persistedUser.message = "Please provide coordinates."
+    //========== NEW ADMIN LINK CODE =================
+    let check = req.session.user.admin
+    if (check) {
+      persistedUser.adminlink = true
+
+    }
+    // =========== END ==================
     res.render('user-page', { persistedUser: persistedUser })
   }
   else {
@@ -276,6 +282,12 @@ server.post('/submit-complaint', (req, res) => {
       // console.log(savedComplaint)
     }).then(() => {
       persistedUser.message = "You're complaint has successfully been submitted. The city of Houston thanks you."
+      // ================ NEW ADMIN LINK CODE ==============
+      let check = req.session.user.admin
+      if (check) {
+        persistedUser.adminlink = true
+      }
+      // ================ END ========================
       res.render('user-page', { persistedUser: persistedUser })
     })
   }
@@ -287,6 +299,7 @@ server.get('/submit-complaint', (req, res) => {
 
 server.post('/delete', (req, res) => {
   deleteID = req.body.id
+  let category = req.body.category
   models.Complaint.destroy({
     where: {
       id: deleteID
@@ -294,6 +307,7 @@ server.post('/delete', (req, res) => {
   }).then(() => {
     res.redirect('/admin')
   })
+
 })
 
 server.use(function (req, res, next) {
@@ -330,6 +344,25 @@ function styleCategory(category) {
   }
   return result
 }
+//  ======= MIDDLEWARE ADMIN LINK FUNCTION ====
+function admiLinkCheck(req, res, next) {
+  let check = req.session.user.admin
+  if (check) {
+    console.log("TRUE")
+    persistedUser = req.session.user
+    persistedUser.adminLink = true
+    res.render('user-page', {
+      persistedUser: persistedUser
+    })
+  } else {
+    console.log("FALSE")
+    persistedUser = req.session.user
+    res.render('user-page', {
+      persistedUser: persistedUser
+    })
+  }
+}
+
 
 
 // ============ NEW CODE ENDS HERE =============
