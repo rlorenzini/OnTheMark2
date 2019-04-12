@@ -5,32 +5,24 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
-      <li class="nav-item active">
+      {{! <li class="nav-item active">
         <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
-      </li>
+      </li> }}
       {{#persistedUser.adminLink}}
       {{> adminlink}}
       {{/persistedUser.adminLink}}
 
       {{^persistedUser.adminLink}}
       {{/persistedUser.adminLink}}
-
-      {{! <li class="nav-item active">
-        <a class="nav-link" href="/register">Register<span class="sr-only">(current)</span></a>
-      </li> }}
-
       <li class="nav-item active">
-      <form action ="/my-complaints" method ="GET">
-        <button class="nav-link active btn btn-link">My Complaints</button>
-        </form>
+        <a class="nav-link" href="/user-page">User page<span class="sr-only">(current)</span></a>
       </li>
-      
-      <li class="nav-item active">
+            <li class="nav-item active">
       <form action ="/logout" method ="post">
         <button class="nav-link active btn btn-link">Log Out</button>
         </form>
       </li>
-      {{! <span class="sr-only">(current)</span> }}  
-        </div>
-    </ul>
+
+</ul>
+</div>
 </nav>

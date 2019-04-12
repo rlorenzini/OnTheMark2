@@ -177,7 +177,6 @@ server.post('/login', (req, res) => {
           var hour = 3600000
           req.session.cookie.expires = new Date(Date.now() + hour)
           req.session.cookie.maxAge = hour
-          // render admin page
 
         } else {
           res.render('login', { message: "Invalid username or password." })
@@ -310,6 +309,26 @@ server.post('/delete', (req, res) => {
 
 })
 
+server.get('/my-complaints', (req, res) => {
+  let userid = req.session.user.id
+  let check = req.session.user.admin
+  if (check) {
+    persistedUser.adminlink = true
+  }
+  models.User.findByPk(userid, {
+    include: [{
+      model: models.Complaint,
+      as: 'complaints'
+    }]
+  }).then((result) => {
+    res.render('my-complaints', {
+      persistedUser: persistedUser,
+      result: result
+    })
+
+  })
+})
+
 server.use(function (req, res, next) {
   res.status(404).send("Sorry can't find that!")
 });
@@ -347,10 +366,13 @@ function styleCategory(category) {
 //  ======= MIDDLEWARE ADMIN LINK FUNCTION ====
 function admiLinkCheck(req, res, next) {
   let check = req.session.user.admin
+  let userid = req.session.user.id
+  console.log(userid)
   if (check) {
     console.log("TRUE")
     persistedUser = req.session.user
     persistedUser.adminLink = true
+
     res.render('user-page', {
       persistedUser: persistedUser
     })
@@ -363,6 +385,21 @@ function admiLinkCheck(req, res, next) {
   }
 }
 
+function getUserComplaints(req, res, next) {
+  let userid = req.session.user.id
+  models.User.findByPk(userid, {
+    include: [{
+      model: models.Complaint,
+      as: 'complaints'
+    }]
+  }).then((result) => {
+    res.render('user-page', {
+      persistedUser: persistedUser,
+      result: result
+    })
+
+  })
+}
 
 
 // ============ NEW CODE ENDS HERE =============
