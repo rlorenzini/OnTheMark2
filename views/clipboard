@@ -1,0 +1,18 @@
+<div>
+<ul id="complaintsList">
+  {{#result}}
+  <li style="display: flex;">
+  <div>
+    <form action="/delete" method="post">
+    <input type="hidden" name="id" value={{id}}>
+    <p>Category: {{category}}</p>
+    <p>{{lat}}</p>
+    <p>{{long}}</p>
+    <p>{{description}}</p>
+    <button type="submit" style="inline-block">Delete</button>
+    </form>
+    </div>
+  </li>
+  {{/result}}
+</ul>
+</div>
