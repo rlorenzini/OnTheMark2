@@ -9,15 +9,13 @@
   margin-left: 12%;
   margin-right: 0.5%;
   width: 31.25rem;
-  max-width: 520rem;
+  max-width: 31.25rem;
   height: 31.25rem;
 }
 #mapDiv #mapid {
   width: 31.25rem;
   height: 31.25rem;
-  /* display: flex; */
-  /* justify-content: center; */
-
+  max-width: 31.25rem;
 }
 .leaflet-container {
   width: 100%;
@@ -38,10 +36,6 @@ p{
   margin-right: 50%;
 }
 
-/* .spacing{
-  margin-left : 2%;
- title "Complaints"
-} */
 #spacing {
   align-self: flex-start;
   margin-left: 0.5%;
@@ -65,5 +59,28 @@ p{
 @media only screen and (max-width: 600px) {
   p {
     margin-right: 12%;
+  }
+  .userpagebox {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  .userpagebox #mapDiv {
+    margin-left: 2%;
+    margin-right: 2%;
+    width: 96%;
+    max-width: 96%;
+    height: 100%;
+  }
+  #mapDiv #mapid {
+    margin-left: 2%;
+    margin-right: 2%;
+    width: 96%;
+    height: 350px;
+  }
+  .leaflet-container {
+    width: 100%;
+    max-width: 340px;
+    height: 100%;
   }
 }
