@@ -67,3 +67,7 @@ p{
 .elementspacing{
   margin-top: 7%;
 }
+
+#userPageButton{
+  .button4 {background-color: #e7e7e7; color: black;
+    } /* Gray */ 
