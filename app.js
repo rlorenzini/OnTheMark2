@@ -2,7 +2,7 @@ const express = require('express'),
   mustacheExpress = require('mustache-express'),
   bodyParser = require('body-parser'),
   server = express(),
-  port = 3000,
+  port = process.env.PORT || 8080,
   path = require('path'),
   router = express.Router(),
   models = require('./models'),
@@ -12,7 +12,6 @@ const express = require('express'),
 VIEWS_PATH = path.join(__dirname, '/views');
 
 server.use(session({
-  key: "user_sid",
   secret: "fmgffndmf",
   resave: false,
   saveUninitialized: false
@@ -89,7 +88,7 @@ server.get('/register', (req, res) => {
   res.render('register')
 })
 
-server.get('/user-page', admiLinkCheck, validateLogin, (req, res) => { })
+server.get('/user-page', adminLinkCheck, validateLogin, (req, res) => { })
 
 // server.get('/admin', (req, res) => {
 //   res.render('admin', { persistedUser: req.session.user })
@@ -364,7 +363,7 @@ function styleCategory(category) {
   return result
 }
 //  ======= MIDDLEWARE ADMIN LINK FUNCTION ====
-function admiLinkCheck(req, res, next) {
+function adminLinkCheck(req, res, next) {
   let check = req.session.user.admin
   let userid = req.session.user.id
   console.log(userid)
