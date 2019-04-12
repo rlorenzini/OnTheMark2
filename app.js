@@ -89,7 +89,7 @@ server.get('/register', (req, res) => {
   res.render('register')
 })
 
-server.get('/user-page', admiLinkCheck, validateLogin, (req, res) => { })
+server.get('/user-page', adminLinkCheck, validateLogin, (req, res) => { })
 
 // server.get('/admin', (req, res) => {
 //   res.render('admin', { persistedUser: req.session.user })
@@ -210,7 +210,7 @@ server.post('/complaints', (req, res) => {
   console.log(req.body.complaints)
 })
 
-server.get('/admin', validateLogin, validateAdmin, (req, res) => {
+server.get('/admin', validateLogin, (req, res) => {
   models.Complaint.findAll()
     .then((result) => {
       res.render('admin', { result: result, persistedUser: req.session.user, headerCat: "All Complaints" })
@@ -305,7 +305,7 @@ server.post('/delete', (req, res) => {
       id: deleteID
     }
   }).then(() => {
-    res.render('admin')
+    res.redirect('/admin')
   })
 
 })
@@ -345,7 +345,7 @@ function styleCategory(category) {
   return result
 }
 //  ======= MIDDLEWARE ADMIN LINK FUNCTION ====
-function admiLinkCheck(req, res, next) {
+function adminLinkCheck(req, res, next) {
   let check = req.session.user.admin
   if (check) {
     console.log("TRUE")
