@@ -1,19 +1,23 @@
+@media only screen and (min-device-width : 0px) and (max-device-width : 480px)
+
 .display-4 {
     font-size: 1em;
 }
 .listbox{
-    width : 350px !important;
+    width : 300px !important;
     padding : 0;
+    margin-left:1%;
+    box-shadow: 1px 2px 2px grey;
+   
 }
-
-
-
 .div1{
     padding-left : 20px;
     display:flex;
     flex-direction: row;
-    background-color: rgba(0,0,0,.075)
-
+    background-color: rgba(0,0,0,.075);
+   
+    
+    
 }
 .div2{
     background-color: rgba(0,0,0,.075);
@@ -26,4 +30,19 @@ li{
 
 label{
     padding-right : 10px;
+}
+
+h2 {
+margin-left : 3%;
+color : blue;
+}
+
+.adminDropBox{
+margin-left : 3%;  
+}
+
+h4{
+    margin-left: 3%; 
+    margin-top: 1%;
+    color:blue;
 }
