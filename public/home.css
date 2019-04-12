@@ -1,0 +1,31 @@
+.div1 {
+  background-color: rgba(0,0,0,.075)
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+
+.button {
+  background-color: #555555;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.body {
+  text-align: center;
+  background-color: Gainsboro
+}
+
+.jumbotron {
+  padding: 1rem;
+}
