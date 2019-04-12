@@ -80,7 +80,7 @@ function validateLogin(req, res, next) {
 
 server.get('/', (req, res) => {
   console.log(req.session)
-  res.render('login')
+  res.render('home')
 })
 
 
