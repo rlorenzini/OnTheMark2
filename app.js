@@ -89,19 +89,7 @@ server.get('/register', (req, res) => {
   res.render('register')
 })
 
-server.get('/user-page', admiLinkCheck, validateLogin, (req, res) => {
-  // let check = req.session.user.admin
-  // if (check) {
-  //   res.render('user-page', {
-  //     persistedUser: req.session.user,
-  //     adminlink: true
-  //   })
-  // } else {
-  //   res.render('user-page', {
-  //     persistedUser: req.session.user
-  //   })
-  // }
-})
+server.get('/user-page', admiLinkCheck, validateLogin, (req, res) => { })
 
 // server.get('/admin', (req, res) => {
 //   res.render('admin', { persistedUser: req.session.user })
