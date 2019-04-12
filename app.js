@@ -12,7 +12,6 @@ const express = require('express'),
 VIEWS_PATH = path.join(__dirname, '/views');
 
 server.use(session({
-  key: "user_sid",
   secret: "fmgffndmf",
   resave: false,
   saveUninitialized: false
@@ -210,7 +209,7 @@ server.post('/complaints', (req, res) => {
   console.log(req.body.complaints)
 })
 
-server.get('/admin', validateLogin, (req, res) => {
+server.get('/admin', validateLogin, validateAdmin, (req, res) => {
   models.Complaint.findAll()
     .then((result) => {
       res.render('admin', { result: result, persistedUser: req.session.user, headerCat: "All Complaints" })
