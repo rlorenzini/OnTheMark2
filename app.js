@@ -305,7 +305,7 @@ server.post('/delete', (req, res) => {
       id: deleteID
     }
   }).then(() => {
-    res.redirect('/admin')
+    res.render('admin')
   })
 
 })
