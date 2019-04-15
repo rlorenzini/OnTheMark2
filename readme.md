@@ -1,6 +1,10 @@
 # On the Mark!
 **On the Mark! is a website designed by four individuals, Mike, Alpa, Richard, and Kanwal, as a Digital Crafts project.**
-The website is live <a href="https://agile-mesa-12521.herokuapp.com/">HERE.</a>
+The website is live <a href="https://agile-mesa-12521.herokuapp.com/">HERE.</a> 
+<br>
+For testing purposes, a user has been set up for visitors.<br>
+**Username:** HelloThere <br>
+**Password:** HelloThere
 
 
 # How It Works
@@ -57,4 +61,13 @@ The website is live <a href="https://agile-mesa-12521.herokuapp.com/">HERE.</a>
 <img src="adminsorted.png"/>
 
 <p>The admin is fully able to submit their own complaints, but are able to delete any and all complaints submitted. </p>
+<br>
 
+# Future Features 
+**API Page** <br>
+**Display All Complaints Map Layer** <br>
+**Display Markers By Category** <br>
+**Change Markers By Category Filtering** <br>
+**Username and Password Requirements** <br>
+**Email Integration** <br>
+**"Your complaint is being serviced." "Your complaint has been resolved."** <br>
