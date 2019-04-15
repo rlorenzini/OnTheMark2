@@ -65,7 +65,8 @@ For testing purposes, a user has been set up for visitors.<br>
 <br>
 
 # Our API
-Our API is working and <a href="https://agile-mesa-12521.herokuapp.com/api">live!</a>
+Our API is working and <a href="https://agile-mesa-12521.herokuapp.com/api">live!</a> <br>
+Make sure to install Google Chrome's JSONView extension for a better viewing experience.
 <img src="onthemarkAPI.png"/>
 
 # Future Features 
