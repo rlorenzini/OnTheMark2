@@ -328,9 +328,9 @@ server.get('/my-complaints', (req, res) => {
   })
 })
 
-server.use(function (req, res, next) {
-  res.status(404).send("Sorry can't find that!")
-});
+// server.use(function (req, res, next) {
+//   res.status(404).send("Sorry can't find that!")
+// });
 
 function styleCategory(category) {
   let result = ""
@@ -399,7 +399,16 @@ function getUserComplaints(req, res, next) {
 
   })
 }
+//============= API REQUEST ====================
+server.get('/api',(req,res)=>{
 
+    models.Complaint.findAll().then((result) => {
+      res.json(result)
+      console.log(result)
+    })
+})
+//remember to install JSONView chrome extension
+//result is the array; result[i].Complaint.VALUE 
 
 // ============ NEW CODE ENDS HERE =============
 server.listen(port, () => { console.log(`Server is running on port ${port}.`) })
