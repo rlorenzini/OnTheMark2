@@ -6,7 +6,6 @@ For testing purposes, a user has been set up for visitors.<br>
 **Username:** HelloThere <br>
 **Password:** HelloThere
 
-
 # How It Works
 **Register and Login**
 <img src="homepage.png"/>
@@ -62,6 +61,10 @@ For testing purposes, a user has been set up for visitors.<br>
 
 <p>The admin is fully able to submit their own complaints, but are able to delete any and all complaints submitted. </p>
 <br>
+
+# Our API
+Our API is working, but is not currently live. Coming soon!
+<img src="onthemarkAPI.png"/>
 
 # Future Features 
 **API Page** <br>
