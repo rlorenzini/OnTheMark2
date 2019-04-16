@@ -1,6 +1,19 @@
 let storedCoordinates = [] //holds coordinate data
+//mymap = the actual map; initializing the map
 
-var mymap = L.map('mapid') //mymap = the actual map; initializing the map
+//=========== TESTING HARDCODED MULTI LAYER / MARKERS =============
+
+var mymap = L.map('mapid')
+
+
+//set map conditions
+var onloadmap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    minZoom: 10,
+    id: 'mapbox.streets',
+    accessToken: 'pk.eyJ1IjoicmxvcmVuemluaSIsImEiOiJjanR5Z3R2bjQxNjlxM3lvNTV4ZnMxOXAyIn0.xxNzHRkLduHYsYIMoCvGCA'
+}).addTo(mymap);
+//end
 
 //set max map boundaries
 mymap.fitBounds([
@@ -13,11 +26,33 @@ mymap.setMaxBounds([
 ]);
 //end of max
 
-function onMapClick(e){
-  document.getElementById('latInput').value = e.latlng.lat
-  document.getElementById('longInput').value = e.latlng.lng
-}
-mymap.on('click',onMapClick)
+
+
+var pothole = L.marker([29.8895, -95.4792]).bindPopup('This is a pothole.'),
+    signal = L.marker([29.8442,-95.2429]).bindPopup('This is a signal.');
+
+var allMarkers = L.layerGroup([pothole,signal])
+
+var baseLayers = {
+    "OpenStreetMap": onloadmap
+};
+//if you want different views, such as night, satellite, etc
+//var VARNAME = L.tileLayer.......
+//under baseLayers, add "DisplayName": VARNAME
+var overlays = {
+    "Markers": allMarkers
+};
+//to split categories, will need to designate which ones are different categories
+//var VARNAME = L.layerGroup([where coordinates need to be])
+//add under overlays as "Display Name": VARNAME 
+
+L.control.layers(baseLayers, overlays).addTo(mymap);
+
+
+
+
+
+
 
 // only one marker at a time; doesn't remove GPS marker
 var theMarker = {};
@@ -51,8 +86,6 @@ theMarker = L.marker([lat,lng]).addTo(mymap);
     storedCoordinates.splice(0)
     storedCoordinates.push(e)
     pullAndSaveCoordinates()
-    document.getElementById('latInput').value = e.latlng.lat
-    document.getElementById('longInput').value = e.latlng.lng
 }
 function onLocationError(e) { //error message
     alert(e.message);
@@ -62,25 +95,14 @@ mymap.on('locationfound', onLocationFound); //runs GPS
 //end
 
 //EXPLANATION:
-//lines 17 - 28 define the marker for a single click
-//if theMarker exists, remove it (23)
-//if theMarker does not esist, create it (27)
+//the on('click') define the marker for a single click
+//if theMarker exists, remove it
+//if theMarker does not esist, create it
 // L = layer, which is a display on top of the map; you are adding and removing a layer from the map
-//lines 33 - 53 are for the GPS; currently removes the marker but not the location bubble
+//GPS currently removes the marker but not the location bubble
 //also, keeps checking for GPS location on a loop
 
 
-
-
-
-//set map conditions
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    minZoom: 10,
-    id: 'mapbox.streets',
-    accessToken: 'pk.eyJ1IjoicmxvcmVuemluaSIsImEiOiJjanR5Z3R2bjQxNjlxM3lvNTV4ZnMxOXAyIn0.xxNzHRkLduHYsYIMoCvGCA'
-}).addTo(mymap);
-//end
 
 //start of mouse click coordinates
 //can this be inside a ./model?
@@ -161,8 +183,7 @@ L.Control.Coordinates = L.Control.extend({
 		if (obj.latlng) {
 			L.DomUtil.get(this._lat).innerHTML = '<strong>' + this.options.latitudeText + ':</strong> ' + obj.latlng.lat.toFixed(this.options.precision).toString();
 			L.DomUtil.get(this._lng).innerHTML = '<strong>' + this.options.longitudeText + ':</strong> ' + obj.latlng.lng.toFixed(this.options.precision).toString();
-
-    }
+		}
 	}
 });
 //end of mouse click coordinates
@@ -188,10 +209,10 @@ mymap.on('click', function(e) {
 //saving mouse click coordinates
 function pullAndSaveCoordinates(){
   for(var i in storedCoordinates){
-    //console.log(storedCoordinates[i.length-1].latlng) //storing all clicks. Need to only store LAST click.
+    console.log(storedCoordinates[i.length-1].latlng) //storing all clicks. Need to only store LAST click.
     let latitude = storedCoordinates[i].latlng.lat
     let longitude = storedCoordinates[i].latlng.lng
-    // document.getElementById("coordinatesDisplay").innerHTML = latitude + ', ' + longitude
+    document.getElementById("coordinatesDisplay").innerHTML = latitude + ', ' + longitude
     // console.log(storedCoordinates[i].latlng.lat)
     // console.log(storedCoordinates[i].latlng.lng)
 

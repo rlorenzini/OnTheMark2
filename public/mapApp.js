@@ -1,6 +1,22 @@
 let storedCoordinates = [] //holds coordinate data
+//mymap = the actual map; initializing the map
 
-var mymap = L.map('mapid') //mymap = the actual map; initializing the map
+//=========== TESTING HARDCODED MULTI LAYER / MARKERS =============
+var pothole = L.marker([29.8895, -95.4792]).bindPopup('This is a pothole.'),
+    signal = L.marker([29.8442,-95.2429]).bindPopup('This is a signal.');
+// console.log(pothole)
+console.log("DO I EVEN EXIST?!")
+var complaints = L.layerGroup([pothole,signal]);
+
+var overlayMaps = {
+  "Complaints":complaints;
+}
+
+L.control.layers(overlayMaps).addTo(mymap)
+
+var mymap = L.map('mapid', {
+  layers: [complaints]
+})
 
 //set max map boundaries
 mymap.fitBounds([
@@ -54,11 +70,11 @@ mymap.on('locationfound', onLocationFound); //runs GPS
 //end
 
 //EXPLANATION:
-//lines 17 - 28 define the marker for a single click
-//if theMarker exists, remove it (23)
-//if theMarker does not esist, create it (27)
+//the on('click') define the marker for a single click
+//if theMarker exists, remove it
+//if theMarker does not esist, create it
 // L = layer, which is a display on top of the map; you are adding and removing a layer from the map
-//lines 33 - 53 are for the GPS; currently removes the marker but not the location bubble
+//GPS currently removes the marker but not the location bubble
 //also, keeps checking for GPS location on a loop
 
 
