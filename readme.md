@@ -6,6 +6,10 @@ For testing purposes, a user has been set up for visitors.<br>
 **Username:** HelloThere <br>
 **Password:** HelloThere
 
+# Watch It In Action
+<img src="onthemark.gif"/>
+
+
 # How It Works
 **Register and Login**
 <img src="homepage.png"/>
