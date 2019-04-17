@@ -1,7 +1,34 @@
 let storedCoordinates = [] //holds coordinate data
+//mymap = the actual map; initializing the map
 
-var mymap = L.map('mapid') //mymap = the actual map; initializing the map
+//=========== TESTING HARDCODED MULTI LAYER / MARKERS =============
+var pothole = L.marker([29.8895, -95.4792]).bindPopup('This is a pothole.'),
+    signal = L.marker([29.8442,-95.2429]).bindPopup('This is a signal.');
+// console.log(pothole)
+// console.log("DO I EVEN EXIST?!")
+// var complaints = L.layerGroup([pothole,signal]);
+//
+// var overlayMaps = {
+//   "Complaints":complaints
+// }
 
+var mymap = L.map('mapid').on('load', function(){
+  fetch('https://agile-mesa-12521.herokuapp.com/api')
+    .then(function(response) {
+      return response.json();
+    }).then(function(complaintJson){
+      let lMarkerArray = complaintJson.map((complaint) => {
+        return L.marker([complaint.lat, complaint.long])
+      })
+      let overlayMaps = { "Complaints": L.layerGroup(lMarkerArray)}
+      L.control.layers(overlayMaps).addTo(mymap)
+    })
+
+})
+
+
+
+// var mymap = L.map('mapid',{layers:onloadmap,baseLayers,overlays}).on('load',postData)
 //set max map boundaries
 mymap.fitBounds([
     [30.16412, -95.81726],
@@ -54,11 +81,11 @@ mymap.on('locationfound', onLocationFound); //runs GPS
 //end
 
 //EXPLANATION:
-//lines 17 - 28 define the marker for a single click
-//if theMarker exists, remove it (23)
-//if theMarker does not esist, create it (27)
+//the on('click') define the marker for a single click
+//if theMarker exists, remove it
+//if theMarker does not esist, create it
 // L = layer, which is a display on top of the map; you are adding and removing a layer from the map
-//lines 33 - 53 are for the GPS; currently removes the marker but not the location bubble
+//GPS currently removes the marker but not the location bubble
 //also, keeps checking for GPS location on a loop
 
 
@@ -182,7 +209,7 @@ function pullAndSaveCoordinates(){
     console.log(storedCoordinates[i.length-1].latlng) //storing all clicks. Need to only store LAST click.
     let latitude = storedCoordinates[i].latlng.lat
     let longitude = storedCoordinates[i].latlng.lng
-    document.getElementById("coordinatesDisplay").innerHTML = latitude + ', ' + longitude
+    // document.getElementById("coordinatesDisplay").innerHTML = latitude + ', ' + longitude
     // console.log(storedCoordinates[i].latlng.lat)
     // console.log(storedCoordinates[i].latlng.lng)
 
