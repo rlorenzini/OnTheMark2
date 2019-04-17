@@ -7,7 +7,7 @@ For testing purposes, a user has been set up for visitors.<br>
 **Password:** HelloThere
 
 # Watch It In Action
-<img src="onthemark.gif"/>
+<img src="onthemark3.gif"/>
 
 
 # How It Works
