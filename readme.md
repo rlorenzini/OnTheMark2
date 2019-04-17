@@ -11,6 +11,9 @@ For testing purposes, a user has been set up for visitors.<br>
 # Watch It In Action
 <img src="onthemark3.gif"/>
 
+# All Complaints Displaying On Map
+<img src="allmarkers.gif"/>
+
 # How It Works
 **Register and Login**
 <img src="homepage.png"/>
