@@ -209,7 +209,7 @@ function pullAndSaveCoordinates(){
     console.log(storedCoordinates[i.length-1].latlng) //storing all clicks. Need to only store LAST click.
     let latitude = storedCoordinates[i].latlng.lat
     let longitude = storedCoordinates[i].latlng.lng
-    document.getElementById("coordinatesDisplay").innerHTML = latitude + ', ' + longitude
+    // document.getElementById("coordinatesDisplay").innerHTML = latitude + ', ' + longitude
     // console.log(storedCoordinates[i].latlng.lat)
     // console.log(storedCoordinates[i].latlng.lng)
 

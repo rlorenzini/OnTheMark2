@@ -1,20 +1,37 @@
 let storedCoordinates = [] //holds coordinate data
+let overlayMaps = {};
 //mymap = the actual map; initializing the map
 
 //=========== TESTING HARDCODED MULTI LAYER / MARKERS =============
+var pothole = L.marker([29.8895, -95.4792]).bindPopup('This is a pothole.'),
+    signal = L.marker([29.8442,-95.2429]).bindPopup('This is a signal.');
+// console.log(pothole)
+// console.log("DO I EVEN EXIST?!")
+// var complaints = L.layerGroup([pothole,signal]);
+//
+// var overlayMaps = {
+//   "Complaints":complaints
+// }
 
-var mymap = L.map('mapid')
-
-
-//set map conditions
-var onloadmap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    minZoom: 10,
-    id: 'mapbox.streets',
-    accessToken: 'pk.eyJ1IjoicmxvcmVuemluaSIsImEiOiJjanR5Z3R2bjQxNjlxM3lvNTV4ZnMxOXAyIn0.xxNzHRkLduHYsYIMoCvGCA'
-}).addTo(mymap);
-//end
-
+var mymap = L.map('mapid').on('load', function(){
+  fetch('https://agile-mesa-12521.herokuapp.com/api')
+    .then(function(response) {
+      return response.json();
+    }).then(function(complaintJson){
+      let lMarkerArray = complaintJson.map((complaint) => {
+        return L.marker([complaint.lat, complaint.long])
+      })
+      let overlayMaps = { "Complaints": L.layerGroup(lMarkerArray)}
+      let streetView = {"Street View": L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          minZoom: 10,
+          id: 'mapbox.streets',
+          accessToken: 'pk.eyJ1IjoicmxvcmVuemluaSIsImEiOiJjanR5Z3R2bjQxNjlxM3lvNTV4ZnMxOXAyIn0.xxNzHRkLduHYsYIMoCvGCA'
+      }).addTo(mymap)}
+      L.control.layers(streetView, overlayMaps).addTo(mymap)
+    })
+})
+// var mymap = L.map('mapid',{layers:onloadmap,baseLayers,overlays}).on('load',postData)
 //set max map boundaries
 mymap.fitBounds([
     [30.16412, -95.81726],
@@ -25,34 +42,11 @@ mymap.setMaxBounds([
     [29.42524, -94.95758]
 ]);
 //end of max
-
-
-
-var pothole = L.marker([29.8895, -95.4792]).bindPopup('This is a pothole.'),
-    signal = L.marker([29.8442,-95.2429]).bindPopup('This is a signal.');
-
-var allMarkers = L.layerGroup([pothole,signal])
-
-var baseLayers = {
-    "OpenStreetMap": onloadmap
-};
-//if you want different views, such as night, satellite, etc
-//var VARNAME = L.tileLayer.......
-//under baseLayers, add "DisplayName": VARNAME
-var overlays = {
-    "Markers": allMarkers
-};
-//to split categories, will need to designate which ones are different categories
-//var VARNAME = L.layerGroup([where coordinates need to be])
-//add under overlays as "Display Name": VARNAME 
-
-L.control.layers(baseLayers, overlays).addTo(mymap);
-
-
-
-
-
-
+function onMapClick(e){
+  document.getElementById('latInput').value = e.latlng.lat
+  document.getElementById('longInput').value = e.latlng.lng
+}
+mymap.on('click',onMapClick)
 
 // only one marker at a time; doesn't remove GPS marker
 var theMarker = {};
@@ -86,6 +80,8 @@ theMarker = L.marker([lat,lng]).addTo(mymap);
     storedCoordinates.splice(0)
     storedCoordinates.push(e)
     pullAndSaveCoordinates()
+    document.getElementById('latInput').value = e.latlng.lat
+    document.getElementById('longInput').value = e.latlng.lng
 }
 function onLocationError(e) { //error message
     alert(e.message);
@@ -103,6 +99,17 @@ mymap.on('locationfound', onLocationFound); //runs GPS
 //also, keeps checking for GPS location on a loop
 
 
+
+
+
+//set map conditions
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    minZoom: 10,
+    id: 'mapbox.streets',
+    accessToken: 'pk.eyJ1IjoicmxvcmVuemluaSIsImEiOiJjanR5Z3R2bjQxNjlxM3lvNTV4ZnMxOXAyIn0.xxNzHRkLduHYsYIMoCvGCA'
+}).addTo(mymap);
+//end
 
 //start of mouse click coordinates
 //can this be inside a ./model?
@@ -212,7 +219,7 @@ function pullAndSaveCoordinates(){
     console.log(storedCoordinates[i.length-1].latlng) //storing all clicks. Need to only store LAST click.
     let latitude = storedCoordinates[i].latlng.lat
     let longitude = storedCoordinates[i].latlng.lng
-    document.getElementById("coordinatesDisplay").innerHTML = latitude + ', ' + longitude
+    // document.getElementById("coordinatesDisplay").innerHTML = latitude + ', ' + longitude
     // console.log(storedCoordinates[i].latlng.lat)
     // console.log(storedCoordinates[i].latlng.lng)
 

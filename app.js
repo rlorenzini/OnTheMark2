@@ -47,7 +47,7 @@ server.use(bodyParser.json())
 //   res.redirect('/')
 // })
 server.post('/save-latlng', (req, res) => {
-  console.log(req.body.latitude)
+  console.log(req.body.latitude + "This right here")
   let latitude = req.body.latitude
   let longitude = req.body.longitude
   res.json({ longitude: longitude, latitude: latitude })
@@ -88,8 +88,8 @@ server.get('/register', (req, res) => {
   res.render('register')
 })
 
-// server.get('/user-page', adminLinkCheck, validateLogin, (req, res) => { })
-
+server.get('/user-page', adminLinkCheck, validateLogin, (req, res) => { })
+// MUST HAVE THIS LINE! Can't get coordinates to DB without it 
 // server.get('/admin', (req, res) => {
 //   res.render('admin', { persistedUser: req.session.user })
 // })
