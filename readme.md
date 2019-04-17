@@ -8,6 +8,9 @@ For testing purposes, a user has been set up for visitors.<br>
 
 *Our API is <a href="https://agile-mesa-12521.herokuapp.com/api">live!</a>*
 
+# Watch It In Action
+<img src="onthemark3.gif"/>
+
 # How It Works
 **Register and Login**
 <img src="homepage.png"/>
