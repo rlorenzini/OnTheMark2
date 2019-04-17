@@ -6,9 +6,10 @@ For testing purposes, a user has been set up for visitors.<br>
 **Username:** HelloThere <br>
 **Password:** HelloThere
 
+*Our API is <a href="https://agile-mesa-12521.herokuapp.com/api">live!</a>*
+
 # Watch It In Action
 <img src="onthemark3.gif"/>
-
 
 # How It Works
 **Register and Login**
@@ -67,11 +68,11 @@ For testing purposes, a user has been set up for visitors.<br>
 <br>
 
 # Our API
-Our API is working, but is not currently live. Coming soon!
+Our API is working and <a href="https://agile-mesa-12521.herokuapp.com/api">live!</a> <br>
+Make sure to install Google Chrome's JSONView extension for a better viewing experience.
 <img src="onthemarkAPI.png"/>
 
 # Future Features 
-**API Page** <br>
 **Display All Complaints Map Layer** <br>
 **Display Markers By Category** <br>
 **Change Markers By Category Filtering** <br>
