@@ -5,19 +5,30 @@ let storedCoordinates = [] //holds coordinate data
 var pothole = L.marker([29.8895, -95.4792]).bindPopup('This is a pothole.'),
     signal = L.marker([29.8442,-95.2429]).bindPopup('This is a signal.');
 // console.log(pothole)
-console.log("DO I EVEN EXIST?!")
-var complaints = L.layerGroup([pothole,signal]);
+// console.log("DO I EVEN EXIST?!")
+// var complaints = L.layerGroup([pothole,signal]);
+//
+// var overlayMaps = {
+//   "Complaints":complaints
+// }
 
-var overlayMaps = {
-  "Complaints":complaints;
-}
+var mymap = L.map('mapid').on('load', function(){
+  fetch('https://agile-mesa-12521.herokuapp.com/api')
+    .then(function(response) {
+      return response.json();
+    }).then(function(complaintJson){
+      let lMarkerArray = complaintJson.map((complaint) => {
+        return L.marker([complaint.lat, complaint.long])
+      })
+      let overlayMaps = { "Complaints": L.layerGroup(lMarkerArray)}
+      L.control.layers(overlayMaps).addTo(mymap)
+    })
 
-L.control.layers(overlayMaps).addTo(mymap)
-
-var mymap = L.map('mapid', {
-  layers: [complaints]
 })
 
+
+
+// var mymap = L.map('mapid',{layers:onloadmap,baseLayers,overlays}).on('load',postData)
 //set max map boundaries
 mymap.fitBounds([
     [30.16412, -95.81726],

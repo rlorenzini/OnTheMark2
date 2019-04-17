@@ -88,7 +88,7 @@ server.get('/register', (req, res) => {
   res.render('register')
 })
 
-server.get('/user-page', adminLinkCheck, validateLogin, (req, res) => { })
+// server.get('/user-page', adminLinkCheck, validateLogin, (req, res) => { })
 
 // server.get('/admin', (req, res) => {
 //   res.render('admin', { persistedUser: req.session.user })
@@ -99,11 +99,11 @@ server.post('/register', (req, res) => {
   let username = req.body.username
   let password = req.body.password
   let userRegEx = RegExp('([a-zA-Z0-9]{6,20})$')
-  //username can contain a-z, A-Z, and 0-9, and has to be between 
+  //username can contain a-z, A-Z, and 0-9, and has to be between
   //six and twenty digits
 
   let pwdRegEx = RegExp('(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,10})$')
-  //password CANNOT start with a number 
+  //password CANNOT start with a number
   //password CANNOT be just letters
   //password must contain one lowercase letter, one uppercase letter, one number,
   //and must be between eight to ten digits long
@@ -199,7 +199,6 @@ server.post('/login', (req, res) => {
 
 server.get('/user-page', validateLogin, (req, res) => {
   res.render('user-page')
-
 })
 
 //logout code
@@ -418,7 +417,7 @@ server.get('/api',(req,res)=>{
     })
 })
 //remember to install JSONView chrome extension
-//result is the array; result[i].Complaint.VALUE 
+//result is the array; result[i].Complaint.VALUE
 
 // ============ NEW CODE ENDS HERE =============
 server.listen(port, () => { console.log(`Server is running on port ${port}.`) })
