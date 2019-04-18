@@ -18,9 +18,13 @@ var mymap = L.map('mapid').on('load', function(){
     .then(function(response) {
       return response.json();
     }).then(function(complaintJson){
-      let lMarkerArray = complaintJson.map((complaint) => {
-        return L.marker([complaint.lat, complaint.long])
-      })
+      let lMarkerArray = complaintJson
+  .filter(complaint => complaint.category == "pothole")
+  .map(complaint => L.marker([complaint.lat, complaint.long]));
+        // return L.marker([complaint.lat, complaint.long])
+      // })
+    // })
+    console.log(lMarkerArray)
       let overlayMaps = { "Complaints": L.layerGroup(lMarkerArray)}
       let streetView = {"Street View": L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
