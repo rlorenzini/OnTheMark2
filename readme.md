@@ -76,9 +76,9 @@ Make sure to install Google Chrome's JSONView extension for a better viewing exp
 <img src="onthemarkAPI.png"/>
 
 # Future Features 
-**Display All Complaints Map Layer** <br>
-**Display Markers By Category** <br>
-**Change Markers By Category Filtering** <br>
-**Username and Password Requirements** <br>
+**Display All Complaints Map Layer** *DONE* <br>
+**Display Markers By Category** *DONE* <br>
+**Change Markers By Category Filtering** *DONE* <br>
+**Username and Password Requirements** *DONE* <br>
 **Email Integration** <br>
 **"Your complaint is being serviced." "Your complaint has been resolved."** <br>
