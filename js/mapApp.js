@@ -18,10 +18,35 @@ var mymap = L.map('mapid').on('load', function(){
     .then(function(response) {
       return response.json();
     }).then(function(complaintJson){
-      let lMarkerArray = complaintJson.map((complaint) => {
-        return L.marker([complaint.lat, complaint.long])
-      })
-      let overlayMaps = { "Complaints": L.layerGroup(lMarkerArray)}
+      let allMarkerArray = complaintJson.map((complaint) => {
+        return L.marker([complaint.lat, complaint.long])});
+      let potholeMarkerArray = complaintJson //do this for all filtering; .map with return for all
+  .filter(complaint => complaint.category == "pothole")
+  .map(complaint => L.marker([complaint.lat, complaint.long]));
+  let signalMarkerArray = complaintJson
+.filter(complaint => complaint.category == "signal_problem")
+.map(complaint => L.marker([complaint.lat, complaint.long]));
+let floodingMarkerArray = complaintJson
+.filter(complaint => complaint.category == "flooding")
+.map(complaint => L.marker([complaint.lat, complaint.long]));
+    console.log(floodingMarkerArray)
+    let sLightMarkerArray = complaintJson
+  .filter(complaint => complaint.category == "street_light")
+  .map(complaint => L.marker([complaint.lat, complaint.long]));
+  let mSignMarkerArray = complaintJson
+.filter(complaint => complaint.category == "missing_sign")
+.map(complaint => L.marker([complaint.lat, complaint.long]));
+let fadeMarksMarkerArray = complaintJson
+.filter(complaint => complaint.category == "faded_markings")
+.map(complaint => L.marker([complaint.lat, complaint.long]));
+      let overlayMaps =
+      {"Complaints": L.layerGroup(allMarkerArray),
+       "Potholes": L.layerGroup(potholeMarkerArray),
+       "Signal Problems": L.layerGroup(signalMarkerArray),
+       "Flooding": L.layerGroup(floodingMarkerArray),
+       "Street Lights": L.layerGroup(sLightMarkerArray),
+       "Missing Signs": L.layerGroup(mSignMarkerArray),
+       "Faded Markings": L.layerGroup(fadeMarksMarkerArray)}
       let streetView = {"Street View": L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
           minZoom: 10,
